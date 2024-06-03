@@ -1,4 +1,4 @@
-from flask import Flask, request,flash, jsonify
+from flask import Flask, request,flash, jsonify, abort
 import os
 import sys
 import io
@@ -30,6 +30,15 @@ def get_zip():
 @app.route('/image/send', methods=['POST'])
 def upload_image():
     files = request.files.getlist('file')  # Get a list of uploaded files
+
+    # If there is no files
+    if len(files) == 0:
+        abort(400)
+
+    #If files are not images
+    for file in files:
+        if not file.filename.lower().endswith(('png', 'jpg', 'jpeg')):
+            abort(400)
 
     result_dict = {}
 
