@@ -13,20 +13,6 @@ sys.stdout.reconfigure(encoding='utf-8')
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/hello', methods=['GET'])
-def hello():
-    return jsonify({"data":"Hello"})
-
-@app.route('/get/zip', methods=['POST'])
-def get_zip():
-    files = request.files['file']  # Get a list of uploaded files
-
-    bytes = files.read()
-    print(bytes)
-
-    return bytes
-
-
 @app.route('/image/send', methods=['POST'])
 def upload_image():
     files = request.files.getlist('file')  # Get a list of uploaded files
